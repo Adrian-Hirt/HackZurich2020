@@ -6,12 +6,21 @@ import math
 
 black_out_nodes = True # Set this to true to black out the found nodes
 add_legend = False # Set this to true to label the found nodes
-generate_labels = False # Set this to true to label an unlabeled image
+should_generate_labels = True # Set this to true to label an unlabeled image
+should_generate_masks = True # Set this to true to generate mask images
+image_to_label = 'ex4.png'
 
-
+# Helper method to calculate distance between two 2D points
 def posDist(a, b):
   return math.sqrt(pow((a[0]-b[0]), 2) + pow((a[1]-b[1]), 2))
 
+# Finds matches for a given template in a file                       
+# Params:
+# - img_gray:       Image to look at in greyscale
+# - img_rgb:        Image in colors, here we write the bounding boxes
+# - templateImage:  The template we want to find
+# - templateName:   The name of the template (for labeling)
+# - threshold:      The threshold to apply for this matching
 def matchImage(img_gray, img_rgb, templateImage, templateName, threshold):
   w, h = templateImage.shape[::-1]
   res = cv.matchTemplate(img_gray, templateImage, cv.TM_CCOEFF_NORMED)
@@ -35,6 +44,16 @@ def matchImage(img_gray, img_rgb, templateImage, templateName, threshold):
       if add_legend:
         cv.putText(img_rgb, templateName, (pt[0] + 20, pt[1] - 10), cv.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 0), 2)
 
+# Searches for a template in an image. Depending on the rotMode param,
+# it also searches for rotated versions of the template
+# Params:
+# - img_gray:       Image to look at in greyscale
+# - img_rgb:        Image in colors, here we write the bounding boxes
+# - templateName:   The name of the template (for loading the image)
+# - threshold:      The threshold to apply for this matching
+# - rotMode:        0 = Template is rotation invariant, need no rotation
+#                   1 = Need to rotate template 90 degrees and search again
+#                   2 = Need to rotate templat 90, 180 and 270 degrees and search again
 def match(img_gray, img_rgb, templateName, threshold, rotMode):
   print("####################### LOOKING FOR " + templateName + " #######################")
   template = cv.imread(templateName, 0)
@@ -55,44 +74,49 @@ def match(img_gray, img_rgb, templateName, threshold, rotMode):
       print("270 deg")
       matchImage(img_gray, img_rgb, rot270, templateName, threshold)
 
-if generate_labels:
-  img_rgb = cv.imread('ex4.png')
+# Generates labels & bounding boxes for one image
+# Params:
+# input_image:  Filename of the image to label
+def generate_labels(input_image):
+  img_rgb = cv.imread(input_image)
   img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
 
-  os.chdir("symbols")
-  for file in glob.glob("high_t/*.png"):
+  for file in glob.glob("symbols/high_t/*.png"):
     match(img_gray, img_rgb, file, 0.88, 2)
 
-  for file in glob.glob("low_t/*.png"):
+  for file in glob.glob("symbols/low_t/*.png"):
     match(img_gray, img_rgb, file, 0.8, 2)
 
-  for file in glob.glob("low_t/rot_inv/*.png"):
+  for file in glob.glob("symbols/low_t/rot_inv/*.png"):
     match(img_gray, img_rgb, file, 0.8, 0)
 
-  for file in glob.glob("low_t/rot_once/*.png"):
+  for file in glob.glob("symbols/low_t/rot_once/*.png"):
     match(img_gray, img_rgb, file, 0.8, 1)
 
+  return img_rgb
 
-  #match(img_gray, img_rgb, "lines/Crossing.png", (r, g, b), 0.8, 1)
-  #match(img_gray, img_rgb, "lines/Junction.png", (r, g, b), 0.82, 2)
+# Main Method
+if __name__ == "__main__":
+  if should_generate_labels:
+    res = generate_labels(image_to_label)
+    cv.imwrite('res.png', res)
 
-  cv.imwrite('../res.png', img_rgb)
+  if should_generate_masks:
+    black = (0, 0, 0)
+    grey = (100, 100, 100)
+    white = (255, 255, 255)
 
-black = (0, 0, 0)
-grey = (100, 100, 100)
-white = (255, 255, 255)
+    res_img = cv.imread('res.png')
+    hsv_img = cv.cvtColor(res_img, cv.COLOR_RGB2HSV)
+    line_mask = cv.inRange(hsv_img, grey, white)
+    node_mask = cv.inRange(hsv_img, black, grey)
 
-res_img = cv.imread('res.png')
-hsv_img = cv.cvtColor(res_img, cv.COLOR_RGB2HSV)
-line_mask = cv.inRange(hsv_img, grey, white)
-node_mask = cv.inRange(hsv_img, black, grey)
+    kernel = np.ones((10, 10), np.uint8)
+    dilated_line_mask = cv.dilate(line_mask, kernel, iterations=1)
 
-kernel = np.ones((10, 10), np.uint8)
-dilated_line_mask = cv.dilate(line_mask, kernel, iterations=1)
+    meeting_points = (node_mask & dilated_line_mask)
 
-meeting_points = (node_mask & dilated_line_mask)
-
-cv.imwrite('line_mask.png', line_mask)
-cv.imwrite('node_mask.png', node_mask)
-cv.imwrite('line_mask_dilated.png', dilated_line_mask)
-cv.imwrite('meeting_points.png', meeting_points)
+    cv.imwrite('line_mask.png', line_mask)
+    cv.imwrite('node_mask.png', node_mask)
+    cv.imwrite('line_mask_dilated.png', dilated_line_mask)
+    cv.imwrite('meeting_points.png', meeting_points)

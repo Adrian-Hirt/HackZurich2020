@@ -4,12 +4,13 @@ from matplotlib import pyplot as plt
 import glob, os
 import math
 
-def posDist(a, b):
-  result = math.sqrt(pow((a[0]-b[0]), 2) + pow((a[1]-b[1]), 2))
-  #print("a = " + str(a) + ", b = " + str(b) + " => " + str(result))
-  return result
+black_out_nodes = False
+add_legend = True
 
-def matchImage(img_gray, img_rgb, templateImage, borderColor, templateName, threshold):
+def posDist(a, b):
+  return math.sqrt(pow((a[0]-b[0]), 2) + pow((a[1]-b[1]), 2))
+
+def matchImage(img_gray, img_rgb, templateImage, templateName, threshold):
   w, h = templateImage.shape[::-1]
   res = cv.matchTemplate(img_gray, templateImage, cv.TM_CCOEFF_NORMED)
   loc = np.where( res >= threshold )
@@ -25,10 +26,14 @@ def matchImage(img_gray, img_rgb, templateImage, borderColor, templateName, thre
       vectors.append(newPoint)
       print("Discovered template " + templateName + " in image at x =" + str(pt[0]) + ", y = " + str(pt[1]))
       print("----- Appending, vectors is now: " + str(vectors))
-      cv.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), borderColor, 2)
-      cv.putText(img_rgb, templateName, (pt[0] + 20, pt[1] - 10), cv.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 0), 2)
+      if black_out_nodes:
+        cv.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0, 0, 0), -1)
+      else:
+        cv.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0, 0, 0), 2)
+      if add_legend:
+        cv.putText(img_rgb, templateName, (pt[0] + 20, pt[1] - 10), cv.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 0), 2)
 
-def match(img_gray, img_rgb, templateName, borderColor, threshold, rotMode):
+def match(img_gray, img_rgb, templateName, threshold, rotMode):
   print("####################### LOOKING FOR " + templateName + " #######################")
   template = cv.imread(templateName, 0)
 
@@ -37,47 +42,35 @@ def match(img_gray, img_rgb, templateName, borderColor, threshold, rotMode):
   rot270 = cv.rotate(rot180, cv.ROTATE_90_CLOCKWISE)
 
   print("Normal")
-  matchImage(img_gray, img_rgb, template, borderColor, templateName, threshold)
+  matchImage(img_gray, img_rgb, template, templateName, threshold)
 
   if rotMode == 1 or rotMode == 2:
     print("90 deg")
-    matchImage(img_gray, img_rgb, rot90, borderColor, templateName, threshold)
+    matchImage(img_gray, img_rgb, rot90, templateName, threshold)
     if rotMode == 2:
       print("180 deg")
-      matchImage(img_gray, img_rgb, rot180, borderColor, templateName, threshold)
+      matchImage(img_gray, img_rgb, rot180, templateName, threshold)
       print("270 deg")
-      matchImage(img_gray, img_rgb, rot270, borderColor, templateName, threshold)
-  
-r = 255
-g = 0
-b = 0
+      matchImage(img_gray, img_rgb, rot270, templateName, threshold)
 
-img_rgb = cv.imread('ex2b.png')
+img_rgb = cv.imread('ex4.png')
 img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
 
 os.chdir("symbols")
 for file in glob.glob("high_t/*.png"):
-  r -= 15
-  g += 15
-  match(img_gray, img_rgb, file, (r, g, b), 0.88, 2)
+  match(img_gray, img_rgb, file, 0.88, 2)
 
 for file in glob.glob("low_t/*.png"):
-  r -= 15
-  g += 15
-  match(img_gray, img_rgb, file, (r, g, b), 0.8, 2)
+  match(img_gray, img_rgb, file, 0.8, 2)
 
 for file in glob.glob("low_t/rot_inv/*.png"):
-  r -= 15
-  g += 15
-  match(img_gray, img_rgb, file, (r, g, b), 0.8, 0)
+  match(img_gray, img_rgb, file, 0.8, 0)
 
 for file in glob.glob("low_t/rot_once/*.png"):
-  r -= 15
-  g += 15
-  match(img_gray, img_rgb, file, (r, g, b), 0.8, 1)
+  match(img_gray, img_rgb, file, 0.8, 1)
 
 
-match(img_gray, img_rgb, "lines/Crossing.png", (r, g, b), 0.8, 1)
-match(img_gray, img_rgb, "lines/Junction.png", (r, g, b), 0.83, 2)
+#match(img_gray, img_rgb, "lines/Crossing.png", (r, g, b), 0.8, 1)
+#match(img_gray, img_rgb, "lines/Junction.png", (r, g, b), 0.82, 2)
 
 cv.imwrite('../res.png', img_rgb)

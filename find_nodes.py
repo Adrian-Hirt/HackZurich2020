@@ -10,9 +10,15 @@ should_generate_labels = True # Set this to true to label an unlabeled image
 should_generate_masks = True # Set this to true to generate mask images
 image_to_label = 'ex4.png'
 
-# Helper method to calculate distance between two 2D points
+class node():
+  def __init__(self, templateName, nodeDims, nodePosition):
+    self.type = templateName
+    self.nodePosition = nodePosition
+    self.nodeDims = nodeDims
+
 def posDist(a, b):
-  return math.sqrt(pow((a[0]-b[0]), 2) + pow((a[1]-b[1]), 2))
+  return math.sqrt(pow((a.nodePosition[0]-b.nodePosition[0]), 2) + pow((a.nodePosition[1]-b.nodePosition[1]), 2))
+
 
 # Finds matches for a given template in a file                       
 # Params:
@@ -27,7 +33,7 @@ def matchImage(img_gray, img_rgb, templateImage, templateName, threshold):
   loc = np.where( res >= threshold )
   vectors = []
   for pt in zip(*loc[::-1]):
-    newPoint = [pt[0], pt[1]]
+    newPoint = node(templateName, [w, h], [pt[0], pt[1]])
     canAdd = True
     for oldPoint in vectors:
       if posDist(newPoint, oldPoint) < 20:
@@ -36,7 +42,7 @@ def matchImage(img_gray, img_rgb, templateImage, templateName, threshold):
     if canAdd:
       vectors.append(newPoint)
       print("Discovered template " + templateName + " in image at x =" + str(pt[0]) + ", y = " + str(pt[1]))
-      print("----- Appending, vectors is now: " + str(vectors))
+      print("----- Appending, now has " + str(len(vectors)) + ' entries')
       if black_out_nodes:
         cv.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0, 0, 0), -1)
       else:

@@ -13,7 +13,7 @@ var svg = d3.select("#my_dataviz")
 .attr("transform",
     "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("https://github.com/Adrian-Hirt/HackZurich2020/raw/master/public/data.json", function( data) {
+d3.json("https://github.com/Adrian-Hirt/HackZurich2020/raw/master/docs/data.json", function( data) {
 
 // Initialize the links
 var link = svg

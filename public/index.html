@@ -4,13 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team TBD</title>
+    <link rel="stylesheet" href="http://hackzurich.siemens.cool/styles/vendor.css">
+    <link rel="stylesheet" href="http://hackzurich.siemens.cool/styles/main.min.css">
     <link rel="stylesheet" href="assets/app.css">
 </head>
-<body>
+<body ng-app="app" class="siemens ng-scope" data-spy="scroll" data-target=".navbar" data-offset="78">
+
+    <!--[if lt IE 10>
+      <p class="browsehappy">You are using a <a href="http://browsehappy.com/"><strong>vintage</strong> browser</a>, please update it!</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <!-- uiView:  --><div ui-view="" class="ng-scope"><header class="ng-scope"><nav class="navbar navbar-default navbar-fixed-top" data-spy="affix" data-offset="78"><div class="container"><div class="row"><div id="navbar-header" class="navbar-header"><a class="navbar-brand" href="/"><img src="http://hackzurich.siemens.cool/assets/images/siemens-logo.png" class="logo"> <img src="http://hackzurich.siemens.cool/assets/images/siemens-claim.png" class="logo-claim"></a></div><div id="navbar"><!-- TODO: Implement search function once if needed
+          <div class="navbar-search">
+            <div id="navbar-search-content" class="navbar-search-content navbar-collapse collapse no-transition">
+              <div class="mobile-background"></div>
+              <input type="search" aria-label="Search for ..." placeholder="Search for ..." class="form-control" />
+              <button><span class="newton-search"></span><span class="search-button-label">Search</span></button>
+            </div>
+          </div>
+          --><ul class="nav navbar-nav navbar-right"><li><button type="button" class="navbar-search-button navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-search-content" aria-expanded="false" aria-controls="navbar"><span class="newton-search"></span></button></li><li><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-primary" aria-expanded="false" aria-controls="navbar"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button></li></ul></div></div><div id="navbar-primary" class="row navbar-collapse collapse">
+              
+        </div></div></nav></header><main class="ng-scope"><div class="test-picture container"><div class="row" style="height: 100%"><div class="col-sm-5 pull-right jumbotron" style="position: relativ; top: 50%; transform: translateY(-50%)"><h1 class="ng-binding">Team TBD @ HackZurich 2020</h1><p class="ng-binding">Five people, one team!</p></div></div></div><div class="container"><div class="row"><div class="col-xs-12"><ol class="breadcrumb"><li class="dropdown"><a href="https://hackzurich.siemens.cool" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="newton-home"></span></a><ul class="dropdown-menu"><!-- ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'file' --><li ng-repeat="item in vm.pages" ng-if="item.type === 'file'" class="ng-scope"><a ui-sref="doc({id: item.file})" class="ng-binding" href="#/index">Home</a></li><!-- end ngIf: item.type === 'file' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'file' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'file' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'file' --><!-- end ngRepeat: item in vm.pages --><!-- ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'link' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'link' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'link' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'link' --><li ng-repeat="item in vm.pages" ng-if="item.type === 'link'" class="ng-scope"><a href="https://www.siemens.com/global/en/home/company/jobs/search-careers.html" class="ng-binding">Careers at Siemens</a></li><!-- end ngIf: item.type === 'link' --><!-- end ngRepeat: item in vm.pages --></ul></li><!-- ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'parent' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'parent' --><li class="dropdown ng-scope" ng-repeat="item in vm.pages" ng-if="item.type === 'parent'"><a class="dropdown-toggle ng-binding" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Lift the Veil!</a><ul class="dropdown-menu"><!-- ngRepeat: subitem in item.pages --><li ng-repeat="subitem in item.pages" class="ng-scope"><a ui-sref="doc({id: subitem.file})" class="ng-binding" href="#/challenge_smo">Challenge Description</a></li><!-- end ngRepeat: subitem in item.pages --><li ng-repeat="subitem in item.pages" class="ng-scope"><a ui-sref="doc({id: subitem.file})" class="ng-binding" href="#/challenge_smo_dataset">Datasets Provided</a></li><!-- end ngRepeat: subitem in item.pages --><li ng-repeat="subitem in item.pages" class="ng-scope"><a ui-sref="doc({id: subitem.file})" class="ng-binding" href="#/challenge_smo_gettingthedata">Getting the Data</a></li><!-- end ngRepeat: subitem in item.pages --></ul></li><!-- end ngIf: item.type === 'parent' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'parent' --><li class="dropdown ng-scope" ng-repeat="item in vm.pages" ng-if="item.type === 'parent'"><a class="dropdown-toggle ng-binding" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Graph the Building</a><ul class="dropdown-menu"><!-- ngRepeat: subitem in item.pages --><li ng-repeat="subitem in item.pages" class="ng-scope"><a ui-sref="doc({id: subitem.file})" class="ng-binding" href="#/challenge_si">Challenge Description</a></li><!-- end ngRepeat: subitem in item.pages --><li ng-repeat="subitem in item.pages" class="ng-scope"><a ui-sref="doc({id: subitem.file})" class="ng-binding" href="#/challenge_si_dataset">Datasets Provided</a></li><!-- end ngRepeat: subitem in item.pages --></ul></li><!-- end ngIf: item.type === 'parent' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'parent' --><!-- end ngRepeat: item in vm.pages --></ol></div></div></div><section><div class="container"><div class="row"><div class="col-md-12"><!-- ngInclude: vm.id -->
+            <div ng-include="vm.id" style="overflow: hidden" class="ng-scope">
+                <h1 id="datasets-provided" class="ng-scope">Datasets solved</h1>
+                <div id="my_dataviz"></div>
+                <p class="ng-scope">All resources are are located in the GitHub Repository</p>
+                <!--<p class="ng-scope">The following files are included:</p>
+                <ul class="ng-scope">
+                    <li><code>overview.vsdx</code>: All symbols, nodes, supernodes and examples in Visio raw format</li>
+                    <li><code>overview.pdf</code>: Same as overview.vsdx in pdf format (if you don't have Visio installed)</li>
+                    <li><code>symbols_svg</code>: Folder with all symbols (input) in svg format</li>
+                    <li><code>symbols_png</code>: Folder with all symbols (input) in png format</li>
+                    <li><code>examples_svg</code>: Folder with all examples (hydraulic diagrams) in svg format</li>
+                    <li><code>examples_png</code>: Folder with all examples (hydraulic diagrams) in png format</li>
+                    <li><code>graph_svg</code>: Folder with some resulting graph outputs in svg format</li>
+                </ul>-->
+                <p class="ng-scope"><a href="https://github.com/Adrian-Hirt/HackZurich2020" target="_blank">Download all zipped data</a> (3.4 MB)</p>
+            </div>
+</div></div></div></section></main><footer class="footer ng-scope"><div class="container"><div class="row"><!-- ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'parent' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'parent' --><div class="col-xs-12 col-sm-6 col-lg-4 ng-scope" ng-repeat="item in vm.pages" ng-if="item.type === 'parent'"><h4 class="ng-binding">Lift the Veil!</h4><ul><!-- ngRepeat: subitem in item.pages --><li ng-repeat="subitem in item.pages" class="ng-scope"><a ui-sref="doc({id: subitem.file})" class="ng-binding" href="#/challenge_smo">Challenge Description</a></li><!-- end ngRepeat: subitem in item.pages --><li ng-repeat="subitem in item.pages" class="ng-scope"><a ui-sref="doc({id: subitem.file})" class="ng-binding" href="#/challenge_smo_dataset">Datasets Provided</a></li><!-- end ngRepeat: subitem in item.pages --><li ng-repeat="subitem in item.pages" class="ng-scope"><a ui-sref="doc({id: subitem.file})" class="ng-binding" href="#/challenge_smo_gettingthedata">Getting the Data</a></li><!-- end ngRepeat: subitem in item.pages --></ul></div><!-- end ngIf: item.type === 'parent' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'parent' --><div class="col-xs-12 col-sm-6 col-lg-4 ng-scope" ng-repeat="item in vm.pages" ng-if="item.type === 'parent'"><h4 class="ng-binding">Graph the Building</h4><ul><!-- ngRepeat: subitem in item.pages --><li ng-repeat="subitem in item.pages" class="ng-scope"><a ui-sref="doc({id: subitem.file})" class="ng-binding" href="#/challenge_si">Challenge Description</a></li><!-- end ngRepeat: subitem in item.pages --><li ng-repeat="subitem in item.pages" class="ng-scope"><a ui-sref="doc({id: subitem.file})" class="ng-binding" href="#/challenge_si_dataset">Datasets Provided</a></li><!-- end ngRepeat: subitem in item.pages --></ul></div><!-- end ngIf: item.type === 'parent' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: item.type === 'parent' --><!-- end ngRepeat: item in vm.pages --><!-- ngIf: vm.footer --><div class="col-xs-12 col-sm-6 col-lg-4 ng-scope" ng-if="vm.footer"><h4 class="ng-binding">HackZurich</h4><ul><!-- ngRepeat: item in vm.footer.links --><li ng-repeat="item in vm.footer.links" class="ng-scope"><a href="http://hackzurich.com" class="ng-binding">Website</a></li><!-- end ngRepeat: item in vm.footer.links --><li ng-repeat="item in vm.footer.links" class="ng-scope"><a href="http://hackzurich.com/workshops" class="ng-binding">Workshops</a></li><!-- end ngRepeat: item in vm.footer.links --></ul></div><!-- end ngIf: vm.footer --></div><div class="row sn-meta-navigation"><div class="col-xs-12"><span class="p3 ng-binding" style="padding-right: 40px">© Siemens Mobility AG, 2020</span> <a href="http://www.siemens.com/corp/en/index/corporate_info.htm" target="_blank" class="a3">Corporate Information</a> <a href="http://www.siemens.com/corp/en/index/privacy.htm" target="_blank" class="a3">Privacy Policy</a> <a href="http://www.siemens.com/corp/en/index/siemens_ag_cookie_policy.htm" target="_blank" class="a3">Cookie Policy</a> <a href="http://www.siemens.com/corp/en/index/terms_of_use.htm" target="_blank" class="a3">Terms of use</a> <a href="http://www.siemens.com/corp/en/index/digital_id.htm" target="_blank" class="a3">Digital ID</a></div></div></div></footer></div>
+
+
+
+
+
     <!-- Load d3.js -->
     <script src="https://d3js.org/d3.v4.js"></script>
     <!-- Create a div where the graph will take place -->
-    <div id="my_dataviz"></div>
+    
     <script src="assets/app.js"></script>
 </body>
 </html>

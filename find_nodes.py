@@ -1,11 +1,11 @@
 import cv2 as cv
 import numpy as np
-from matplotlib import pyplot as plt
 import glob, os
 import math
+import follow_edges
 
-black_out_nodes = False # Set this to true to black out the found nodes
-add_legend = True # Set this to true to label the found nodes
+black_out_nodes = True # Set this to true to black out the found nodes
+add_legend = False # Set this to true to label the found nodes
 should_generate_labels = True # Set this to true to label an unlabeled image
 should_generate_masks = False # Set this to true to generate mask images
 image_to_label = 'ex4.png'

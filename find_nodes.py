@@ -119,6 +119,9 @@ def generate_labels(input_image):
   for file in glob.glob("symbols/low_t/rot_once/*.png"):
     match(img_gray, img_rgb, file, 0.8, 1)
 
+  for file in glob.glob("symbols/lines/*.png"):
+    match(img_gray, img_rgb, file, 0.9, 2)
+
   return img_rgb
 
 # Main Method

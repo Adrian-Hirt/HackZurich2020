@@ -13,7 +13,7 @@ var svg = d3.select("#my_dataviz")
 .attr("transform",
     "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("../data.json", function( data) {
+d3.json("data.json", function( data) {
 
 // Initialize the links
 var link = svg

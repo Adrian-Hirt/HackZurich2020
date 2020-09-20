@@ -3,10 +3,16 @@ main {
 }
 
 .test-picture {
-  background-image: url("siemens/jumbotron.jpg");
+  background-image: url("siemens/terminal.png");
 }
 
 .breadcrumb > .dropdown > .dropdown-toggle::after {
   content: ">";
+}
+
+#my_datawrapper {
+  overflow: scroll;
+  max-width: 100%;
+  max-height: 1000px;
 }
 /*# sourceMappingURL=app.css.map */

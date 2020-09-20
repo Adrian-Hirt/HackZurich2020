@@ -18,6 +18,23 @@ class node():
     self.nodePosition = nodePosition
     self.nodeDims = nodeDims
 
+# Checks if a node (or rather the bounding box that contains the node)
+# contains a given X-Y coordinate.
+def nodeContainsCoordinate(x, y, node):
+  topX = node.nodePosition[0]
+  topY = node.nodePosition[1]
+  botX = node.nodeDims[0] + topX
+  botY = node.nodeDims[1] + topY
+  return (topX <= x <= botX) and (topY <= y <= botY)
+
+# Finds the node that contains a given X-Y coordinate. If it can't find
+# such a node, it resurns None
+def findContainingNode(x, y):
+  for node in nodes:
+    if nodeContainsCoordinate(x, y, node):
+      return node
+  return None
+
 def posDist(a, b):
   return math.sqrt(pow((a.nodePosition[0]-b.nodePosition[0]), 2) + pow((a.nodePosition[1]-b.nodePosition[1]), 2))
 
@@ -91,7 +108,7 @@ def generate_labels(input_image):
   img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
 
   for file in glob.glob("symbols/high_t/*.png"):
-    match(img_gray, img_rgb, file, 0.88, 2)
+    match(img_gray, img_rgb, file, 0.8, 2)
 
   for file in glob.glob("symbols/low_t/*.png"):
     match(img_gray, img_rgb, file, 0.8, 2)

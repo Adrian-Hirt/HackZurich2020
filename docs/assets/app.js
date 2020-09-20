@@ -63,9 +63,11 @@ node
 });
 
 window.setTimeout(() => {
-    var tooltip = new Tooltip({
-        theme: "dark", // Selects one of the pre-defined tooltip styles - light or dark.
-        distance: 5,    // Specifies the distance in pixels from trigger to tooltip.
-        delay: 0        // Specifies how long the tooltip remains visible (in ms) after the mouse leaves the trigger.
-    });
+    tippy('circle', {
+        content(reference) {
+          const title = reference.getAttribute('title');
+          reference.removeAttribute('title');
+          return title;
+        },
+      });
 }, 1000);

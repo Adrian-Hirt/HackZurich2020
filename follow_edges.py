@@ -61,13 +61,3 @@ def get_adjacent_nodes(img: numpy.ndarray, start: Point, startbox: Box) -> Itera
 
     # Upscale node coordinates
     return map(lambda node: (int(node[0]/SCALE), int(node[1]/SCALE)), candidates)
-
-
-img = cv2.imread('res.png')
-nodeList = get_adjacent_nodes(img, Point(270, 665), (0, 0, 0, 0))
-
-for node in nodeList:
-    cv2.circle(img,(node[1], node[0]), 2, (255, 0, 0), 3)
-    print(node)
-
-cv2.imwrite('nodes.png', img)

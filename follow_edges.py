@@ -68,6 +68,6 @@ nodeList = get_adjacent_nodes(img, Point(270, 665), (0, 0, 0, 0))
 
 for node in nodeList:
     cv2.circle(img,(node[1], node[0]), 2, (255, 0, 0), 3)
-    print(node)
+    #print(node)
 
 cv2.imwrite('nodes.png', img)

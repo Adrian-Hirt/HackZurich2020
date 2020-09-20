@@ -6,7 +6,7 @@ import follow_edges
 
 black_out_nodes = True # Set this to true to black out the found nodes
 add_legend = False # Set this to true to label the found nodes
-should_generate_labels = True # Set this to true to label an unlabeled image
+should_generate_labels = False # Set this to true to label an unlabeled image
 should_generate_masks = False # Set this to true to generate mask images
 image_to_label = 'ex4.png'
 
@@ -124,6 +124,21 @@ def generate_labels(input_image):
 
   return img_rgb
 
+
+def findStartNodes():
+  img = cv.imread("meeting_points.png", 0)
+  _, contours, _ = cv.findContours(img.copy(), cv.RETR_CCOMP, cv.CHAIN_APPROX_TC89_L1)
+  centres = []
+  for i in range(len(contours)):
+    moments = cv.moments(contours[i])
+    if int(moments['m00']) == 0:
+      divisor = 1
+    else:
+      divisor = moments['m00']
+    centres.append((int(moments['m10']/divisor), int(moments['m01']/divisor)))
+  return centres
+
+
 # Main Method
 if __name__ == "__main__":
   if should_generate_labels:
@@ -149,3 +164,5 @@ if __name__ == "__main__":
     cv.imwrite('node_mask.png', node_mask)
     cv.imwrite('line_mask_dilated.png', dilated_line_mask)
     cv.imwrite('meeting_points.png', meeting_points)
+
+  findStartNodes()

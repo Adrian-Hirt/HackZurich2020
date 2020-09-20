@@ -1,4 +1,8 @@
 main {
   margin-top: 52px;
 }
+
+.test-picture {
+  background-image: url("siemens/jumbotron.jpg");
+}
 /*# sourceMappingURL=app.css.map */

@@ -30,6 +30,11 @@ var node = svg
 .enter()
 .append("circle")
     .attr("r", 20)
+    .attr("alt", function(d, i) { return d.name; })
+    .attr("title", function(d, i) { return d.name; })
+    .attr("data-id", function(d, i) { return d.id; })
+    .attr("data-name", function(d, i) { return d.name; })
+    .attr("data-tooltip", function(d, i) { return d.name; })
     .style("fill", "#69b3a2")
 
 // Let's list the force we wanna apply on the network
@@ -56,3 +61,11 @@ node
 }
 
 });
+
+window.setTimeout(() => {
+    var tooltip = new Tooltip({
+        theme: "dark", // Selects one of the pre-defined tooltip styles - light or dark.
+        distance: 5,    // Specifies the distance in pixels from trigger to tooltip.
+        delay: 0        // Specifies how long the tooltip remains visible (in ms) after the mouse leaves the trigger.
+    });
+}, 1000);

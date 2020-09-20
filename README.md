@@ -6,4 +6,5 @@
 [Main Link](https://adrian-hirt.github.io/HackZurich2020/)
 
 # How to use
-Run find_nodes.py to scan an image of a building automation plan. The program will analyze this image using pattern matching to find, identify and its components from the symbols, and generate a graph visualizing the connections inbetween those components.
+Run find_nodes.py to scan an image of a building automation plan. The program will analyze this image using pattern matching to find, identify and label its components from the symbols, and generate a graph visualizing the connections inbetween those components.
+
